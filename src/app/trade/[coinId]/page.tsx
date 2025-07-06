@@ -13,7 +13,8 @@ type Coin = {
 }
 
 export default function TradePage() {
-  const { coinId } = useParams()
+  const params = useParams() as { coinId: string } // ✅ Fixes the type error
+  const { coinId } = params
   const router = useRouter()
 
   const [coin, setCoin] = useState<Coin | null>(null)
@@ -68,7 +69,9 @@ export default function TradePage() {
       <div className="bg-white shadow rounded p-4 max-w-md">
         <div className="mb-2">
           <img src={coin.image} alt={coin.name} className="w-10 h-10 inline-block mr-2" />
-          <span className="text-xl font-bold">{coin.name} ({coin.symbol.toUpperCase()})</span>
+          <span className="text-xl font-bold">
+            {coin.name} ({coin.symbol.toUpperCase()})
+          </span>
         </div>
         <p className="mb-4 text-gray-600">
           Current Price: <strong>${coin.current_price.toLocaleString()}</strong>
